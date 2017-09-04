@@ -1,0 +1,52 @@
+2017-09-04
+----------
+
+- Just as code can be written so that it is "testable".
+- structure the py90dot1 code so that it is "contributable".
+- "Contributable" = Make it easy to contribute to
+- easy to contribute `code` as well as `expertise`
+- Attributions for contributions
+    - contributions in `code` is easy to attribute 
+        - in commit record as well as in the copyright.
+    - contributions in `expertise` is harder to attribute. 
+        - maybe have a text (or *.rst) document that embodies the `expertise` as it comes in.
+
+
+Making code `contributable`:
+
+- Break the code completely independant modules
+- each module can be updated without affecting the other modules
+- Possible to have multiple version of each module, as contributors will take different strategies. May be best one be accepted.
+- py90dot1 is uniquely positioned to be structured this way
+
+Structure of py90dot1:
+
+proposed.idf climatezone -> py90dot1.py -> baseline.idf
+
+The modules:
+
+- py90dot1.py
+    - envelope.py
+    - hvac.py
+    
+- envelope.py
+    - window_wall_ratio.py
+    - construction90dot1.py
+    - ext_shade_remover.py
+
+conceptually one can use unix pipe to run this
+
+py90dot1.py "proposed.idf" "climatezone"
+
+becomes
+
+envelope.py "proposed.idf" "climatezone" | hvac.py
+
+becomes
+
+window_wall_ratio.py "proposed.idf" "climatezone" |  construction90dot1.py | ext_shade_remover.py | hvac.py
+
+
+Next steps:
+
+- write a quick and dirty envelope.py, so that there is a seed from hich this can grow.
