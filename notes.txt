@@ -1,3 +1,10 @@
+2017-09-10
+----------
+
+Some useful links for WWR
+https://unmethours.com/question/19266/using-eppy-to-extract-fenestration-from-idf-and-replace-with-wwr-derived-formulas/
+https://github.com/jamiebull1/geomeppy
+
 2017-09-04
 ----------
 
