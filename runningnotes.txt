@@ -1,0 +1,12 @@
+Just keeping track of things as they are done.
+
+2017-09-10
+----------
+
+bite the bullet and code everything in python3 ?
+
+Need to use some package template, so I get all the bells and whistles
+https://github.com/seanfisk/python-project-template
+https://github.com/kennethreitz/python-guide/blob/master/docs/writing/structure.rst
+https://github.com/kengz/python-structure
+https://jeffknupp.com/blog/2013/08/16/open-sourcing-a-python-project-the-right-way/
