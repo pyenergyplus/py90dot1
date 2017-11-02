@@ -6,6 +6,7 @@ fourth line
 one more line
 another line
 new line
+line zero
 
 Just keeping track of things as they are done.
 
