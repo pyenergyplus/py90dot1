@@ -1,3 +1,11 @@
+# Copyright (c) 2017 Santosh Philip
+# =======================================================================
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+# =======================================================================
+
+
 """filters that will filter out the walls, roof, floor, windows"""
 
 import sys
@@ -9,7 +17,7 @@ fname = "./py90dot1/resources/idffiles/5ZoneAirCooledWithCoupledInGradeSlab.idf"
 IDF.setiddname(iddfile)
 idf = IDF(fname)
 allsurfaces = idf.idfobjects["BUILDINGSURFACE:DETAILED"]
-surfaces = [surface for surface in allsurfaces 
+surfaces = [surface for surface in allsurfaces
     if surface.Outside_Boundary_Condition.upper() == 'Outdoors'.upper()]
 
 # roof tilt < 45
@@ -17,12 +25,12 @@ surfaces = [surface for surface in allsurfaces
 # floor tilt > 135
 
 roofs = [surface for surface in surfaces if surface.tilt < 45]
-walls = [surface for surface in surfaces 
+walls = [surface for surface in surfaces
     if surface.tilt >= 45 and surface.tilt <= 135]
 floors = [surface for surface in surfaces if surface.tilt > 135]
 
-[surface.Outside_Boundary_Condition for surface in allsurfaces 
+[surface.Outside_Boundary_Condition for surface in allsurfaces
     if surface.Outside_Boundary_Condition.upper() == 'outdoor'.upper()]
-    
+
 [(surface.tilt, surface.Outside_Boundary_Condition) for surface in allsurfaces
-    if surface.tilt == 180]    
+    if surface.tilt == 180]
