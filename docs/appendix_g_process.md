@@ -27,4 +27,4 @@ The software-structure built on the process described in the document ./docs/app
 - Insert the results of sizing run into model
   - needs step **D**
 
-Going through all the above steps will result in a baseline model.  
+Going through all the above steps will result in a baseline model.
