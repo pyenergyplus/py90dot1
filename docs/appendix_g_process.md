@@ -9,7 +9,7 @@ The software-structure built on the process described in the document ./docs/app
 
 1.  Set the construction to ASHRAE materials for all surfaces based on climate zone
     1. **a.** Filter surfaces as roof, wall, floor, window
-    2. Put in appropriate baseline construction for roof, wall, floor, window.
+    - Put in appropriate baseline construction for roof, wall, floor, window.
         - needs step **a.**
 2. Resize the windows as per Appendix-G rules
 3. Remove all the exterior shades
@@ -19,12 +19,31 @@ The software-structure built on the process described in the document ./docs/app
     - needs step **A**
     - Remove mechanical system
     - Insert baseline mechanical system
-7. **C** do a sizing run of baseline model
+- **C** do a sizing run of baseline model
     - needs all the steps before **A**
     - needs step **B**
-8. **D** extract sizes from results of sizing run
+- **D** extract sizes from results of sizing run
     - needs step **C**
-9. Insert the results of sizing run into model
+- Insert the results of sizing run into model
     - needs step **D**
 
 Going through all the above steps will result in a baseline model.
+
+Changes Baseline as described in the Appendix-G TABLE G3.1
+*Draft version with some simplifications for initial code*
+1. Design Model: *No changes in Baseline Model*
+2. Additions and Alterations: *No changes in Baseline Model*
+3. Space Use Classification: *No changes in Baseline Model*
+4. Schedules: *No changes in Baseline Model*
+5. Building Envelope
+    a. Orientations: All 4 orientations
+    b. Opaque Assemblies: Put in the assembly for the climate zone
+6. Lighting: Put in Ashrae Lighting Values
+7. Thermal Blocks-HVAC Zones Designed: *No changes in Baseline Model*
+8. Thermal Blocks-HVAC Zones Not Designed: *No changes in Baseline Model*
+9. Thermal Blocks-MultiFamily Residential Buildings: *No changes in Baseline Model*
+10. HVAC Systems: Use System selected from Table G3.1.1
+11. Service Hot water: needs research
+12. Receptacle and other loads: *No changes in Baseline Model*
+13. Modeling limitations to Simulation Program: *No changes in Baseline Model*
+14. Exterior conditions: *No changes in Baseline Model*
