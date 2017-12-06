@@ -30,16 +30,20 @@ The software-structure built on the process described in the document ./docs/app
 Going through all the above steps will result in a baseline model.
 
 Changes Baseline as described in the Appendix-G TABLE G3.1
-*Draft version*
-1. Design Model: No changes
-2. Additions and Alterations: No changes
-3. Space Use Classification: No Changes
-4. Schedules: No changes
+*Draft version with some simplifications for initial code*
+1. Design Model: *No changes in Baseline Model*
+2. Additions and Alterations: *No changes in Baseline Model*
+3. Space Use Classification: *No changes in Baseline Model*
+4. Schedules: *No changes in Baseline Model*
 5. Building Envelope
     a. Orientations: All 4 orientations
     b. Opaque Assemblies: Put in the assembly for the climate zone
 6. Lighting: Put in Ashrae Lighting Values
-7. Thermal Blocks-HVAC Zones Designed: No changes
-8. Thermal Blocks-HVAC Zones Not Designed: No changes
-9. Thermal Blocks-MultiFamily Residential Buildings: No changes
-9. HVAC Systems:
+7. Thermal Blocks-HVAC Zones Designed: *No changes in Baseline Model*
+8. Thermal Blocks-HVAC Zones Not Designed: *No changes in Baseline Model*
+9. Thermal Blocks-MultiFamily Residential Buildings: *No changes in Baseline Model*
+10. HVAC Systems: Use System selected from Table G3.1.1
+11. Service Hot water: needs research
+12. Receptacle and other loads: *No changes in Baseline Model*
+13. Modeling limitations to Simulation Program: *No changes in Baseline Model*
+14. Exterior conditions: *No changes in Baseline Model*
