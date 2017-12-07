@@ -5,8 +5,8 @@ to work in python3
 pyvenv ~/venvs/py3_90dot1 # make virtualenv
 source ~/venvs/py3_90dot1/bin/activate # activate it
 
-pip update -U pip
-pip update -U setuptools
+pip install -U pip
+pip install -U setuptools
 
 edit ~/.pip/pip.conf
 with
