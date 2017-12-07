@@ -18,3 +18,10 @@ Steps for making updates to the software, based on C4 document above:
   - Merge pull request into master
 - *User*:
   - Closes issue #n in issue tracker
+-
+- *Contributer*: pull the changes from pyenergyplus/py90dot1 *Maintainer* has completed the merge
+    - This has to be done in the command line:
+        - `git pull --rebase upstream master`
+    - To do the above you need a remote called `upstream`. You can set this up by the following line in the command line:
+        - `git remote add upstream https://github.com/pyenergyplus/py90dot1.git`
+        - this needs to be done only once
