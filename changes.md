@@ -1,5 +1,9 @@
 ## Changes
 
+#### 2017-12-07
+
+Create the files match the code structure in described in software-structure.md
+
 #### 2017-12-06
 Documented how the software structure relates to Table G3.1 (documentation in ./doc/appendix_g_process.md)
 
