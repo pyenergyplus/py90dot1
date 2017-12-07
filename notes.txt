@@ -5,6 +5,14 @@ to work in python3
 pyvenv ~/venvs/py3_90dot1 # make virtualenv
 source ~/venvs/py3_90dot1/bin/activate # activate it
 
+pip update -U pip
+pip update -U setuptools
+
+edit ~/.pip/pip.conf
+with
+[list]
+format=columns
+
 
 2017-09-10
 ----------
@@ -26,9 +34,9 @@ https://github.com/santoshphilip/py90dot1.git
 - "Contributable" = Make it easy to contribute to
 - easy to contribute `code` as well as `expertise`
 - Attributions for contributions
-    - contributions in `code` is easy to attribute 
+    - contributions in `code` is easy to attribute
         - in commit record as well as in the copyright.
-    - contributions in `expertise` is harder to attribute. 
+    - contributions in `expertise` is harder to attribute.
         - maybe have a text (or *.rst) document that embodies the `expertise` as it comes in.
 
 
@@ -48,7 +56,7 @@ The modules:
 - py90dot1.py
     - envelope.py
     - hvac.py
-    
+
 - envelope.py
     - window_wall_ratio.py
     - construction90dot1.py
