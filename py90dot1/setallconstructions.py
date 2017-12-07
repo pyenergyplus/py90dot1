@@ -5,3 +5,8 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 # =======================================================================
 """Set the construction to ASHRAE materials for all surfaces based on climate zone"""
+
+
+def surfacefilter():
+    """docstring for surfacefilter"""
+    return 2

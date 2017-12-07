@@ -1,3 +1,11 @@
+2017-12-07
+----------
+
+to work in python3
+pyvenv ~/venvs/py3_90dot1 # make virtualenv
+source ~/venvs/py3_90dot1/bin/activate # activate it
+
+
 2017-09-10
 ----------
 
