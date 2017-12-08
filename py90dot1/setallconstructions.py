@@ -7,6 +7,7 @@
 """Set the construction to ASHRAE materials for all surfaces based on climate zone"""
 
 import io
+import itertools
 
 def surfacefilter(idf, filtertype='all'):
     """docstring for surfacefilter"""
@@ -49,21 +50,56 @@ def setconstruction(idf, climatezone):
         0.7500000    ,   ! Solar Absorptance
         0.7500000    ;   ! Visible Absorptance
 
+    Material:NoMass,
+        AHSRAE_Material3,        ! Material Name
+        Rough,           ! Roughness
+        2.290965    ,    ! Resistance {M**2K/W}
+        0.9000000    ,   ! Thermal Absorptance
+        0.7500000    ,   ! Solar Absorptance
+        0.7500000    ;   ! Visible Absorptance
+
     Construction,
         AHSRAE_ConstrRoof,         ! Material layer names follow:
         AHSRAE_Material1;
+
+    Construction,
+        AHSRAE_ConstrWall,         ! Material layer names follow:
+        AHSRAE_Material1;
+
+    Construction,
+        AHSRAE_ConstrFloor,         ! Material layer names follow:
+        AHSRAE_Material1;
+
     """
     IDF = idf.__class__ # sneaky way to avoid `from eppy.modeleditor import IDF`
     materail_constr_idf = IDF(io.StringIO(materail_constr_txt))
-    constr = materail_constr_idf.idfobjects['Construction'.upper()][0]
-    materials = materail_constr_idf.idfobjects['Material:NoMass'.upper()]
-    # wallconstr = constr
-    # floorconstr = constr
-    # roofconstr = constr
-    idf.copyidfobject(constr)
-    for material in materials:
-        idf.copyidfobject(material)
-    roofs = surfacefilter(idf, 'roofs')
+
+    # --- maybe add this to eppy as getidfobjectlist(idf) ---
+    idfobjects = materail_constr_idf.idfobjects
+    idfobjlst = [idfobjects[key] for key in idfobjects if idfobjects[key]]
+    idfobjlst = itertools.chain.from_iterable(idfobjlst)
+    idfobjlst = list(idfobjlst)
+    # --- maybe add this to eppy as getidfobjectlist(idf) ---
+
+    # --- maybe add this to eppy as copyidfintoidf(toidf, fromidf) ---
+    for idfobj in idfobjlst:
+        idf.copyidfobject(idfobj)
+    # --- maybe add this to eppy as copyidfintoidf(toidf, fromidf) ---
+
+    constructions = idf.idfobjects['CONSTRUCTION']
+    roofconstr = constructions[-3]
+    wallconstr = constructions[-2]
+    floorconstr = constructions[-1] # the order is hard coded
+
+    filteredsurfaces = surfacefilter(idf)
+    roofs = filteredsurfaces['roofs']
+    walls = filteredsurfaces['walls']
+    floors = filteredsurfaces['floors']
+
     for roof in roofs:
-        roof.Construction_Name = constr.Name
-    idf.printidf()
+        roof.Construction_Name = roofconstr.Name
+    for wall in walls:
+        wall.Construction_Name = wallconstr.Name
+    for floor in floors:
+        floor.Construction_Name = floorconstr.Name
+    return idf

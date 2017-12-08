@@ -273,8 +273,14 @@ def test_setconstruction():
         3.420846093121,  !- Vertex 4 Y-coordinate {m}
         2.828252313262;  !- Vertex 4 Z-coordinate {m}
     """
+    idftxt = IdfData.idftxt
     fhandle = io.StringIO(idftxt)
     idf = IDF(fhandle)
     result = setallconstructions.setconstruction(idf, 1)
-    print(result)
-    assert False
+    expectedconstr = ['AHSRAE_ConstrFloor', 'AHSRAE_ConstrWall',
+    'AHSRAE_ConstrWall', 'AHSRAE_ConstrWall', 'AHSRAE_ConstrWall',
+    'AHSRAE_ConstrWall', 'AHSRAE_ConstrRoof', 'Exterior Floor']
+    surfaces = idf.idfobjects['BuildingSurface:Detailed'.upper()]
+    result_constrs = [surface.Construction_Name for surface in surfaces]
+    # idf.printidf()
+    assert result_constrs == expectedconstr
