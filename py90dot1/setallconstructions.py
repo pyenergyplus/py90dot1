@@ -35,6 +35,8 @@ def constr_importer(climatezone):
     """returns the ASHRAE consttruction in idf text for clime zone"""
     if climatezone == 'sampleclimatezone':
         from py90dot1.ASHRAE_constr.ASHRAE_constr import AshraeSampleConstr as AshraeConstr
+    elif climatezone == 'climatezone1':
+        from py90dot1.ASHRAE_constr.ASHRAE_constr import AshraeZone1Constr as AshraeConstr
     return AshraeConstr.idftxt
 
 def setconstruction(idf, climatezone):

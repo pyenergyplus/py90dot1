@@ -58,7 +58,8 @@ class AshraeZone1Constr(object):
         0.7500000    ,   ! Solar Absorptance
         0.7500000    ;   ! Visible Absorptance
 
-    AHSRAE_Zone1_Wall_Material,        ! Material Name
+    Material:NoMass,
+        AHSRAE_Zone1_Wall_Material,        ! Material Name
         Rough,           ! Roughness
         0.704105    ,    ! Resistance {M**2K/W} - 0.124 in IP-units
         0.9000000    ,   ! Thermal Absorptance
