@@ -31,46 +31,15 @@ def surfacefilter(idf, filtertype='all'):
     elif filtertype == 'floors':
         return floors
 
+def constr_importer(climatezone):
+    """returns the ASHRAE consttruction in idf text for clime zone"""
+    if climatezone == 'sampleclimatezone':
+        from py90dot1.ASHRAE_constr.ASHRAE_constr import AshraeSampleConstr as AshraeConstr
+    return AshraeConstr.idftxt
+
 def setconstruction(idf, climatezone):
     """Put in appropriate baseline construction for roof, wall, floor, window."""
-    materail_constr_txt = """
-    Material:NoMass,
-        AHSRAE_Material1,        ! Material Name
-        Rough,           ! Roughness
-        2.290965    ,    ! Resistance {M**2K/W}
-        0.9000000    ,   ! Thermal Absorptance
-        0.7500000    ,   ! Solar Absorptance
-        0.7500000    ;   ! Visible Absorptance
-
-    Material:NoMass,
-        AHSRAE_Material2,        ! Material Name
-        Rough,           ! Roughness
-        2.290965    ,    ! Resistance {M**2K/W}
-        0.9000000    ,   ! Thermal Absorptance
-        0.7500000    ,   ! Solar Absorptance
-        0.7500000    ;   ! Visible Absorptance
-
-    Material:NoMass,
-        AHSRAE_Material3,        ! Material Name
-        Rough,           ! Roughness
-        2.290965    ,    ! Resistance {M**2K/W}
-        0.9000000    ,   ! Thermal Absorptance
-        0.7500000    ,   ! Solar Absorptance
-        0.7500000    ;   ! Visible Absorptance
-
-    Construction,
-        AHSRAE_ConstrRoof,         ! Material layer names follow:
-        AHSRAE_Material1;
-
-    Construction,
-        AHSRAE_ConstrWall,         ! Material layer names follow:
-        AHSRAE_Material1;
-
-    Construction,
-        AHSRAE_ConstrFloor,         ! Material layer names follow:
-        AHSRAE_Material1;
-
-    """
+    materail_constr_txt = constr_importer(climatezone)
     IDF = idf.__class__ # sneaky way to avoid `from eppy.modeleditor import IDF`
     materail_constr_idf = IDF(io.StringIO(materail_constr_txt))
 

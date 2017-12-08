@@ -276,11 +276,10 @@ def test_setconstruction():
     idftxt = IdfData.idftxt
     fhandle = io.StringIO(idftxt)
     idf = IDF(fhandle)
-    result = setallconstructions.setconstruction(idf, 1)
+    result = setallconstructions.setconstruction(idf, 'sampleclimatezone')
     expectedconstr = ['AHSRAE_ConstrFloor', 'AHSRAE_ConstrWall',
     'AHSRAE_ConstrWall', 'AHSRAE_ConstrWall', 'AHSRAE_ConstrWall',
     'AHSRAE_ConstrWall', 'AHSRAE_ConstrRoof', 'Exterior Floor']
     surfaces = idf.idfobjects['BuildingSurface:Detailed'.upper()]
     result_constrs = [surface.Construction_Name for surface in surfaces]
-    # idf.printidf()
     assert result_constrs == expectedconstr
