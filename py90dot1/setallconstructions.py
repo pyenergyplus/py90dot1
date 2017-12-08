@@ -6,6 +6,7 @@
 # =======================================================================
 """Set the construction to ASHRAE materials for all surfaces based on climate zone"""
 
+import io
 
 def surfacefilter(idf, filtertype='all'):
     """docstring for surfacefilter"""
@@ -28,3 +29,41 @@ def surfacefilter(idf, filtertype='all'):
         return walls
     elif filtertype == 'floors':
         return floors
+
+def setconstruction(idf, climatezone):
+    """Put in appropriate baseline construction for roof, wall, floor, window."""
+    materail_constr_txt = """
+    Material:NoMass,
+        AHSRAE_Material1,        ! Material Name
+        Rough,           ! Roughness
+        2.290965    ,    ! Resistance {M**2K/W}
+        0.9000000    ,   ! Thermal Absorptance
+        0.7500000    ,   ! Solar Absorptance
+        0.7500000    ;   ! Visible Absorptance
+
+    Material:NoMass,
+        AHSRAE_Material2,        ! Material Name
+        Rough,           ! Roughness
+        2.290965    ,    ! Resistance {M**2K/W}
+        0.9000000    ,   ! Thermal Absorptance
+        0.7500000    ,   ! Solar Absorptance
+        0.7500000    ;   ! Visible Absorptance
+
+    Construction,
+        AHSRAE_ConstrRoof,         ! Material layer names follow:
+        AHSRAE_Material1;
+    """
+    IDF = idf.__class__ # sneaky way to avoid `from eppy.modeleditor import IDF`
+    materail_constr_idf = IDF(io.StringIO(materail_constr_txt))
+    constr = materail_constr_idf.idfobjects['Construction'.upper()][0]
+    materials = materail_constr_idf.idfobjects['Material:NoMass'.upper()]
+    # wallconstr = constr
+    # floorconstr = constr
+    # roofconstr = constr
+    idf.copyidfobject(constr)
+    for material in materials:
+        idf.copyidfobject(material)
+    roofs = surfacefilter(idf, 'roofs')
+    for roof in roofs:
+        roof.Construction_Name = constr.Name
+    idf.printidf()
