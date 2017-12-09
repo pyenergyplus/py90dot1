@@ -1,5 +1,9 @@
 ## Changes
 
+#### 2017-12-09
+
+- setallconstructions.setconstruction() replaces proposed construction with ASHRAE constructions
+
 #### 2017-12-07
 
 - Created the files to match the code structure in described in software-structure.md

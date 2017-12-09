@@ -246,3 +246,40 @@ def test_surfacefilter():
     result = setallconstructions.surfacefilter(idf, 'all')
     resultnames = {key:set([val.Name for val in value]) for key, value in result.items()}
     assert resultnames == dict(roofs=roofnames, walls=wallnames, floors=floornames)
+
+def test_setconstruction():
+    """py.test for setconstruction"""
+    idftxt = """  BuildingSurface:Detailed,
+        Roof_Roof,  !- Name
+        Roof,  !- Surface Type
+        Exterior Roof,  !- Construction Name
+        EE3070,  !- Zone Name
+        Outdoors,  !- Outside Boundary Condition
+        ,  !- Outside Boundary Condition Object
+        SunExposed,  !- Sun Exposure
+        WindExposed,  !- Wind Exposure
+        ,  !- View Factor to Ground
+        4,  !- Number of Vertices
+        -0.097770492466,  !- Vertex 1 X-coordinate {m}
+        2.450602600646,  !- Vertex 1 Y-coordinate {m}
+        2.828252313262,  !- Vertex 1 Z-coordinate {m}
+        0.691465547705,  !- Vertex 2 X-coordinate {m}
+        -0.301790565449,  !- Vertex 2 Y-coordinate {m}
+        1.540000000000,  !- Vertex 2 Z-coordinate {m}
+        4.075106717408,  !- Vertex 3 X-coordinate {m}
+        0.668452927027,  !- Vertex 3 Y-coordinate {m}
+        1.540000000000,  !- Vertex 3 Z-coordinate {m}
+        3.285870677237,  !- Vertex 4 X-coordinate {m}
+        3.420846093121,  !- Vertex 4 Y-coordinate {m}
+        2.828252313262;  !- Vertex 4 Z-coordinate {m}
+    """
+    idftxt = IdfData.idftxt
+    fhandle = io.StringIO(idftxt)
+    idf = IDF(fhandle)
+    result = setallconstructions.setconstruction(idf, 'sampleclimatezone')
+    expectedconstr = ['AHSRAE_ConstrFloor', 'AHSRAE_ConstrWall',
+    'AHSRAE_ConstrWall', 'AHSRAE_ConstrWall', 'AHSRAE_ConstrWall',
+    'AHSRAE_ConstrWall', 'AHSRAE_ConstrRoof', 'Exterior Floor']
+    surfaces = idf.idfobjects['BuildingSurface:Detailed'.upper()]
+    result_constrs = [surface.Construction_Name for surface in surfaces]
+    assert result_constrs == expectedconstr

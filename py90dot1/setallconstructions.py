@@ -6,6 +6,8 @@
 # =======================================================================
 """Set the construction to ASHRAE materials for all surfaces based on climate zone"""
 
+import io
+import itertools
 
 def surfacefilter(idf, filtertype='all'):
     """docstring for surfacefilter"""
@@ -28,3 +30,47 @@ def surfacefilter(idf, filtertype='all'):
         return walls
     elif filtertype == 'floors':
         return floors
+
+def constr_importer(climatezone):
+    """returns the ASHRAE consttruction in idf text for clime zone"""
+    if climatezone == 'sampleclimatezone':
+        from py90dot1.ASHRAE_constr.ASHRAE_constr import AshraeSampleConstr as AshraeConstr
+    elif climatezone == 'climatezone1':
+        from py90dot1.ASHRAE_constr.ASHRAE_constr import AshraeZone1Constr as AshraeConstr
+    return AshraeConstr.idftxt
+
+def setconstruction(idf, climatezone):
+    """Put in appropriate baseline construction for roof, wall, floor, window."""
+    materail_constr_txt = constr_importer(climatezone)
+    IDF = idf.__class__ # sneaky way to avoid `from eppy.modeleditor import IDF`
+    materail_constr_idf = IDF(io.StringIO(materail_constr_txt))
+
+    # --- maybe add this to eppy as getidfobjectlist(idf) ---
+    idfobjects = materail_constr_idf.idfobjects
+    idfobjlst = [idfobjects[key] for key in idfobjects if idfobjects[key]]
+    idfobjlst = itertools.chain.from_iterable(idfobjlst)
+    idfobjlst = list(idfobjlst)
+    # --- maybe add this to eppy as getidfobjectlist(idf) ---
+
+    # --- maybe add this to eppy as copyidfintoidf(toidf, fromidf) ---
+    for idfobj in idfobjlst:
+        idf.copyidfobject(idfobj)
+    # --- maybe add this to eppy as copyidfintoidf(toidf, fromidf) ---
+
+    constructions = idf.idfobjects['CONSTRUCTION']
+    roofconstr = constructions[-3]
+    wallconstr = constructions[-2]
+    floorconstr = constructions[-1] # the order is hard coded
+
+    filteredsurfaces = surfacefilter(idf)
+    roofs = filteredsurfaces['roofs']
+    walls = filteredsurfaces['walls']
+    floors = filteredsurfaces['floors']
+
+    for roof in roofs:
+        roof.Construction_Name = roofconstr.Name
+    for wall in walls:
+        wall.Construction_Name = wallconstr.Name
+    for floor in floors:
+        floor.Construction_Name = floorconstr.Name
+    return idf
