@@ -1,16 +1,52 @@
-tenth line
-ninth line
-eighth line
-seventh line
-sixth line
-fifth line
-fourth line
-one more line
-another line
-new line
-line zero
+2017-12-09
+----------
 
-Just keeping track of things as they are done.
+We may have critical-mass of code and documentation to start collaboration.
+
+some of this may move back to eppy
+
+- Appendix-G issues: @GinaRoddha, @MarinaChavez, @joeDeringer, @jasonglazer
+- python code: @santoshphilip, @ncbrown, @jamiebull1
+- E+ issues: @jasonglazer, 
+
+1. `setallconstructions()` Set the construction to ASHRAE materials for all surfaces based on climate zone
+    1. `surfacefilter()` **a.** Filter surfaces as roof, wall, floor, window
+    2. `setconstruction()` Put in appropriate baseline construction for roof, wall, floor, window.
+        - needs step **a.**
+    - @ncbrown
+2. `windowresizer()` Resize the windows as per Appendix-G rules
+    - @Jamiebull1
+3. `shaderemover()` Remove all the exterior shades
+4. `selfshadeoff()` Turn off self shading in the building
+5. `systemselector()` **A** Select the baseline mechanical system based on *Table G3.1.1-3*
+    - @santoshphilip
+6. `baselinesystem()` **B** Remove proposed mechanical system and insert baseline mechanical system
+    - needs step **A**
+    - `removesystem()` Remove mechanical system
+    - `insertsystem()` Insert baseline mechanical system
+    - @santoshphilip
+
+
+
+7. `baselinerunner()` **C** do a sizing run of baseline model
+    - needs all the steps before **A**
+    - needs step **B**
+    - **** not needed ****
+8. `extractsizing()` **D** extract sizes from results of sizing run
+    - needs step **C**
+    - **** not needed ****
+9. `insertsizing()` Insert the results of sizing run into model
+    - needs step **D**
+    - **** not needed ****
+
+
+extraction of sizing not needed - autosize will do what is needed (differernt input for heating and cooling)
+
+steps:
+- update docs to reflect sizing runs
+- update docs to reflect numbering of Appendix-G
+- Document method for python coders in the python files
+- Ask for collaboration help
 
 2017-09-10
 ----------

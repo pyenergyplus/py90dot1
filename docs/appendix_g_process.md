@@ -19,13 +19,6 @@ The software-structure built on the process described in the document ./docs/app
     - needs step **A**
     - Remove mechanical system
     - Insert baseline mechanical system
-- **C** do a sizing run of baseline model
-    - needs all the steps before **A**
-    - needs step **B**
-- **D** extract sizes from results of sizing run
-    - needs step **C**
-- Insert the results of sizing run into model
-    - needs step **D**
 
 Going through all the above steps will result in a baseline model.
 
