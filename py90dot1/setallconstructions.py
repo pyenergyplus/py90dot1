@@ -8,6 +8,7 @@
 
 import io
 import itertools
+from eppy import idf_helpers
 
 def surfacefilter(idf, filtertype='all'):
     """docstring for surfacefilter"""
@@ -45,18 +46,7 @@ def setconstruction(idf, climatezone):
     IDF = idf.__class__ # sneaky way to avoid `from eppy.modeleditor import IDF`
     materail_constr_idf = IDF(io.StringIO(materail_constr_txt))
 
-    # --- maybe add this to eppy as getidfobjectlist(idf) ---
-    idfobjects = materail_constr_idf.idfobjects
-    idfobjlst = [idfobjects[key] for key in idfobjects if idfobjects[key]]
-    idfobjlst = itertools.chain.from_iterable(idfobjlst)
-    idfobjlst = list(idfobjlst)
-    # --- maybe add this to eppy as getidfobjectlist(idf) ---
-
-    # --- maybe add this to eppy as copyidfintoidf(toidf, fromidf) ---
-    for idfobj in idfobjlst:
-        idf.copyidfobject(idfobj)
-    # --- maybe add this to eppy as copyidfintoidf(toidf, fromidf) ---
-
+    idf_helpers.copyidfintoidf(idf, materail_constr_idf)
     constructions = idf.idfobjects['CONSTRUCTION']
     roofconstr = constructions[-3]
     wallconstr = constructions[-2]

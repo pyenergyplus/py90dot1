@@ -5,20 +5,23 @@ To convert a proposed model into a baseline model, the original model has to be 
 
 This is a draft of the steps needed
 
-The software-structure built on the process described in the document ./docs/appendix_g_process.md
+The software-structure built on the process described in the document ./docs/appendix_g_process.md. The number [n] is the number used by Appendix-G
 
-1.  Set the construction to ASHRAE materials for all surfaces based on climate zone
+1. [5] Set the construction to ASHRAE materials for all surfaces based on climate zone
     1. **a.** Filter surfaces as roof, wall, floor, window
     - Put in appropriate baseline construction for roof, wall, floor, window.
         - needs step **a.**
-2. Resize the windows as per Appendix-G rules
+2. [5] Resize the windows as per Appendix-G rules
 3. Remove all the exterior shades
 4. Turn off self shading in the building
-5. **A** Select the baseline mechanical system based on *Table G3.1.1-3*
-6. **B** remove proposed mechanical system and insert baseline mechanical system
+5. Put in ASHRAE lighting power density based on building type.
+6. [10] **A** Select the HVAC mechanical system based on *Table G3.1.1-3*
+7. [10] **B** remove proposed HVAC system and insert baseline mechanical system
     - needs step **A**
     - Remove mechanical system
     - Insert baseline mechanical system
+    - *Note: Fan power and pump power may not be autosized. It may need the results of a sizing run*
+8. [11] Replace proposed Service Hot Water with Appendix-G System
 
 Going through all the above steps will result in a baseline model.
 
