@@ -1,2 +1,3 @@
-eppy
+# eppy
+https://github.com/santoshphilip/eppy/archive/py90dot1.zip
 pytest
