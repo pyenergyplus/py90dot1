@@ -32,6 +32,11 @@ def surfacefilter(idf, filtertype='all'):
     elif filtertype == 'floors':
         return floors
 
+def glazingfilter(idf, filtertype='all'):
+    """docstring for surfacefilter"""
+    allwindows = idf.idfobjects["FENESTRATIONSURFACE:DETAILED"]
+    return allwindows
+
 def constr_importer(climatezone):
     """returns the ASHRAE consttruction in idf text for clime zone"""
     if climatezone == 'sampleclimatezone':
@@ -48,6 +53,7 @@ def setconstruction(idf, climatezone):
 
     idf_helpers.copyidfintoidf(idf, materail_constr_idf)
     constructions = idf.idfobjects['CONSTRUCTION']
+    windowconstr = constructions[-4]
     roofconstr = constructions[-3]
     wallconstr = constructions[-2]
     floorconstr = constructions[-1] # the order is hard coded
@@ -63,4 +69,8 @@ def setconstruction(idf, climatezone):
         wall.Construction_Name = wallconstr.Name
     for floor in floors:
         floor.Construction_Name = floorconstr.Name
+
+    windows = glazingfilter(idf)
+    for window in windows:
+    	window.Construction_Name = windowconstr.Name
     return idf

@@ -9,6 +9,12 @@
 class AshraeSampleConstr(object):
     """idf text for ASHRAE Zone 1 Construction and Materials"""
     idftxt = """
+    WindowMaterial:SimpleGlazingSystem,
+        AHSRAE_Window_Material,       !- Name
+        2.6,                     !- U-Factor {W/m2-K}
+        0.76,                    !- Solar Heat Gain Coefficient
+        0.63;                    !- Visible Transmittance
+
     Material:NoMass,
         AHSRAE_Material1,        ! Material Name
         Rough,           ! Roughness
@@ -34,6 +40,10 @@ class AshraeSampleConstr(object):
         0.7500000    ;   ! Visible Absorptance
 
     Construction,
+        AHSRAE_ConstrWindow,         ! Material layer names follow:
+        AHSRAE_Zone1_Window_Material;
+
+    Construction,
         AHSRAE_ConstrRoof,         ! Material layer names follow:
         AHSRAE_Material1;
 
@@ -50,6 +60,12 @@ class AshraeSampleConstr(object):
 class AshraeZone1Constr(object):
     """idf text for ASHRAE Zone 1 Construction and Materials"""
     idftxt = """
+    WindowMaterial:SimpleGlazingSystem,
+        AHSRAE_Zone1_Window_Material,       !- Name
+        2.6,                     !- U-Factor {W/m2-K}
+        0.76,                    !- Solar Heat Gain Coefficient
+        0.63;                    !- Visible Transmittance
+
     Material:NoMass,
         AHSRAE_Zone1_Roof_Material,        ! Material Name
         Rough,           ! Roughness
@@ -73,6 +89,10 @@ class AshraeZone1Constr(object):
         0.9000000    ,   ! Thermal Absorptance
         0.7500000    ,   ! Solar Absorptance
         0.7500000    ;   ! Visible Absorptance
+
+    Construction,
+        AHSRAE_Zone1_ConstrWindow,         ! Material layer names follow:
+        AHSRAE_Zone1_Window_Material;
 
     Construction,
         AHSRAE_Zone1_ConstrRoof,         ! Material layer names follow:

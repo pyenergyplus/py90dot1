@@ -219,6 +219,23 @@ class IdfData(object):
     -0.325636295259,  !- Vertex 4 X-coordinate {m}
     3.245265092564,  !- Vertex 4 Y-coordinate {m}
     0.000000000000;  !- Vertex 4 Z-coordinate {m}
+
+  FenestrationSurface:Detailed,
+    Win1,                  !- Name
+    Window,                  !- Surface Type
+    Exterior Window,         !- Construction Name
+    D7FBF4,                  !- Building Surface Name
+    ,                        !- Outside Boundary Condition Object
+    ,                        !- View Factor to Ground
+    ,                        !- Shading Control Name
+    ,                        !- Frame and Divider Name
+    ,                        !- Multiplier
+    4,                       !- Number of Vertices
+    -3.898026889013,-14.663855140174,2.707389342764,  !- X,Y,Z ==> Vertex 1 {m}
+    -3.898026889013,-14.663855140174,0.011499342764,  !- X,Y,Z ==> Vertex 2 {m}
+    9.438486358393,-14.120679929334,0.011499342764,  !- X,Y,Z ==> Vertex 3 {m}
+    9.438486358393,-14.120679929334,2.707389342764;  !- X,Y,Z ==> Vertex 4 {m}
+
 """
 
 
@@ -282,4 +299,15 @@ def test_setconstruction():
     'AHSRAE_ConstrWall', 'AHSRAE_ConstrRoof', 'Exterior Floor']
     surfaces = idf.idfobjects['BuildingSurface:Detailed'.upper()]
     result_constrs = [surface.Construction_Name for surface in surfaces]
+    assert result_constrs == expectedconstr
+
+def test_setconstruction_windows():
+    """py.test for setconstruction"""
+    idftxt = IdfData.idftxt
+    fhandle = io.StringIO(idftxt)
+    idf = IDF(fhandle)
+    result = setallconstructions.setconstruction(idf, 'sampleclimatezone')
+    expectedconstr = ['AHSRAE_ConstrWindow',]
+    windows = idf.idfobjects['FENESTRATIONSURFACE:DETAILED']
+    result_constrs = [window.Construction_Name for window in windows]
     assert result_constrs == expectedconstr
