@@ -1,4 +1,4 @@
-# Copyright (c) 2017 Santosh Philip
+# Copyright (c) 2017-2018 Santosh Philip
 # =======================================================================
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -8,7 +8,17 @@
 
 import io
 import itertools
+import click
+
+from eppy import modeleditor
+from eppy.modeleditor import IDF
+from eppy.easyopen import easyopen
 from eppy import idf_helpers
+try:
+    from py90dot1.ASHRAE_constr import ASHRAE_constr
+except ImportError as e:
+    from ASHRAE_constr import ASHRAE_constr
+
 
 def surfacefilter(idf, filtertype='all'):
     """docstring for surfacefilter"""
@@ -37,17 +47,9 @@ def glazingfilter(idf, filtertype='all'):
     allwindows = idf.idfobjects["FENESTRATIONSURFACE:DETAILED"]
     return allwindows
 
-def constr_importer(climatezone):
-    """returns the ASHRAE consttruction in idf text for clime zone"""
-    if climatezone == 'sampleclimatezone':
-        from py90dot1.ASHRAE_constr.ASHRAE_constr import AshraeSampleConstr as AshraeConstr
-    elif climatezone == 'climatezone1':
-        from py90dot1.ASHRAE_constr.ASHRAE_constr import AshraeZone1Constr as AshraeConstr
-    return AshraeConstr.idftxt
-
 def setconstruction(idf, climatezone):
     """Put in appropriate baseline construction for roof, wall, floor, window."""
-    materail_constr_txt = constr_importer(climatezone)
+    materail_constr_txt = ASHRAE_constr.constr_importer(climatezone)
     IDF = idf.__class__ # sneaky way to avoid `from eppy.modeleditor import IDF`
     materail_constr_idf = IDF(io.StringIO(materail_constr_txt))
 
@@ -74,3 +76,32 @@ def setconstruction(idf, climatezone):
     for window in windows:
     	window.Construction_Name = windowconstr.Name
     return idf
+    
+@click.command()
+@click.option('--idd', default=None, help='path to the IDD file. Optional - will find IDD')
+@click.option('--idf', default=None, help='path to the proposed IDF file')
+@click.option('--climatezone', default=1, help='ASHRAE climate zone')
+@click.option('--baseline', default=None, help='path to the generated baseline IDF file')
+def setconstruction_main(idd, idf, climatezone, baseline):
+    """Set the ASHRAE constructions for the envelope"""
+    click.echo('IDD file is  %s' % idd)
+    click.echo('IDF file is  %s' % idf)
+    click.echo('Climate Zone is  %s' % climatezone)
+    climatezone = "climatezone{}".format(climatezone)
+    idffname = idf # we are calling the eppy idf object as 'idf'. Avoids name clash
+    
+    proposedidf = easyopen(idffname, idd)
+    
+    # - setting of ASHRAE constructions happens here
+    baselineidf = setconstruction(proposedidf, climatezone)
+    # - setting of ASHRAE constructions happens here
+
+    if baseline:
+        proposedidf.saveas(baseline)
+        click.echo('saved baseline file as  %s' % baseline)
+    else:
+        proposedidf.printidf()
+
+if __name__ == '__main__':
+    setconstruction_main()
+

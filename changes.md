@@ -1,5 +1,9 @@
 ## Changes
 
+#### 2018-03-30
+
+- added command line interface for all modules
+
 #### 2017-12-09
 
 - setallconstructions.setconstruction() replaces proposed construction with ASHRAE constructions

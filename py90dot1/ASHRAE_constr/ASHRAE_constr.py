@@ -1,10 +1,19 @@
-# Copyright (c) 2017 Santosh Philip
+# Copyright (c) 2017-2018 Santosh Philip
 # =======================================================================
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 # =======================================================================
 """All the ASHRAE90.1-2010 Constructions  are here in idf text format"""
+
+def constr_importer(climatezone):
+    """returns the ASHRAE consttruction in idf text for clime zone"""
+    if climatezone == 'sampleclimatezone':
+        AshraeConstr = AshraeSampleConstr
+    elif climatezone == 'climatezone1':
+        AshraeConstr = AshraeZone1Constr
+    return AshraeConstr.idftxt
+
 
 class AshraeSampleConstr(object):
     """idf text for ASHRAE Zone 1 Construction and Materials"""
